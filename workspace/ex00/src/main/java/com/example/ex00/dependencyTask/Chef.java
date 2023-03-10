@@ -1,13 +1,10 @@
-package com.example.ex00.dependency;
-
+package com.example.ex00.dependencyTask;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Data
 @Component
-public class Computer {
-    private int ram;
+public class Chef {
+    private int chefCount;
 }
-
-
