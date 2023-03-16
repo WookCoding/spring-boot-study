@@ -10,10 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class DependencyTests {
 
     @Autowired // 단위 테스트에서는 필드 주입만 사용 가능하다.
-    Coding coding;
+            Coding coding;
 
     @Test
-    public void testCoding(){
+    public void testCoding() {
         log.info(String.valueOf(coding));
     }
 

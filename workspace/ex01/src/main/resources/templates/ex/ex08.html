@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>ex08</title>
 </head>
 <body>
-$END$
+    <table border="1">
+        <tr>
+            <th>상품 명</th>
+            <th>상품 가격</th>
+            <th>상품 재고</th>
+            <th>상품 브랜드</th>
+        </tr>
+        <tr>
+            <td th:text="${productVO.name}"></td>
+            <td th:text="${productVO.price}"></td>
+            <td th:text="${productVO.inven}"></td>
+            <td th:text="${productVO.brand}"></td>
+        </tr>
+    </table>
 </body>
 </html>

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@Qualifier(value="laptop")
+@Qualifier(value = "laptop")
 public class Laptop implements Computer {
     @Override
     public int getScreenWidth() {

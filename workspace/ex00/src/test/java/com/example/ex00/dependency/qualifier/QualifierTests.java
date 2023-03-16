@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class QualifierTests {
 
     @Autowired /*@Qualifier("desktop")*/
-    Computer computer;
+            Computer computer;
 
     @Autowired
     Resturant resturant;
@@ -21,7 +21,7 @@ public class QualifierTests {
 //    }
 
     @Test
-    public void testResturant(){
+    public void testResturant() {
         log.info(String.valueOf(resturant));
     }
 

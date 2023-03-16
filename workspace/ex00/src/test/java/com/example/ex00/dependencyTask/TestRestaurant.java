@@ -13,14 +13,14 @@ public class TestRestaurant {
 //    @Autowired
 //    Restaurant restaurant;
 
-      @Autowired
-      School school;
+    @Autowired
+    School school;
 
-      @Autowired
-      Student student;
+    @Autowired
+    Student student;
 
-      @Autowired
-      Teacher teacher;
+    @Autowired
+    Teacher teacher;
 
 //    @Test
 //    public void test(){
@@ -28,17 +28,17 @@ public class TestRestaurant {
 //    }
 
     @Test
-    public void schoolTest(){
+    public void schoolTest() {
         log.info(String.valueOf(school));
     }
 
     @Test
-    public void teacherTest(){
+    public void teacherTest() {
         log.info(String.valueOf(teacher));
     }
 
     @Test
-    public void studentTest(){
+    public void studentTest() {
         log.info(String.valueOf(student));
     }
 }

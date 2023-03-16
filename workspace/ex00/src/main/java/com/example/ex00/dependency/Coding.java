@@ -17,7 +17,7 @@ public class Coding {
 
 //    @Autowired
 //    private Computer computer;
-    
+
 //    Setter 주입
 //    주입받는 객체가 변경될 가능성이 있는 경우에 사용한다.
 //    OCP(Open-Closed Principle, 개방-폐쇄 원칙)을 위반하기 때문에 변경 가능성을 배제하고 불변성을 보장하는 것이 좋다.
@@ -43,12 +43,6 @@ public class Coding {
 //    public  Coding(Computer computer){
 //        this.computer = computer;
 //    }
-
-
-
-
-
-
 
 
 }

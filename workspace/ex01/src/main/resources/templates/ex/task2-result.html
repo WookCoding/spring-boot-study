@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+
+    <title>결과</title>
 </head>
 <body>
-$END$
+        <h2 th:text="${num}" style="display: inline-block">
+        </h2>
+        <h2 style="display: inline-block">번 학생</h2>
+        <h2>
+            총점 :
+            <span th:text="${total}"></span>
+        </h2>
+        <h2>
+            평균 :
+            <span th:text="${avg}"></span>
+        </h2>
 </body>
 </html>

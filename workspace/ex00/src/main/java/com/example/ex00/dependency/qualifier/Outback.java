@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@Qualifier("outback") @Primary
+@Qualifier("outback")
+@Primary
 public class Outback implements Resturant {
     private int steak = Resturant.steakPrice + 30000;
 
