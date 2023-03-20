@@ -22,7 +22,6 @@ public class OrderController {
 
     //    주문
     @PostMapping("/order/order")
-    @Transactional(rollbackFor = Exception.class)
     public String order(OrderVO orderVO) {
         orderService.order(orderVO);
         return "주문 완료";
@@ -36,7 +35,6 @@ public class OrderController {
 
     //    주문취소
     @DeleteMapping("/order/cancel/")
-    @Transactional(rollbackFor = Exception.class)
     public String cancel(Long orderId) {
         orderService.cancel(orderId);
         return "주문 취소";

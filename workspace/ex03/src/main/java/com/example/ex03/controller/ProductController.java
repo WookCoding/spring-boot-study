@@ -25,7 +25,6 @@ public class ProductController {
 
     @PutMapping("/product/update")
     public String updateProductVO(ProductVO productVO){
-        log.info(productVO.toString());
         productService.updateProduct(productVO);
         return "변경 완료";
     }
