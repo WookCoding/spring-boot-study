@@ -10,11 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class MemberDAO {
-
+public class FileDAO {
     @PersistenceContext
     private EntityManager entityManager;
-    
+
 //    추가
     public File save(File file){
         entityManager.persist(file);
@@ -31,10 +30,34 @@ public class MemberDAO {
                         .getSingleResult());
     }
 
-//    전체조회
+//    전체 조회
     public List<File> findAll(){
-        String query = "select f from File inner join f.member";
-        return entityManager.createQuery(query, File.class).getResultList();
+        String query = "select f from File f join fetch f.member";
+        return entityManager
+                        .createQuery(query, File.class)
+                        .getResultList();
+    }
+
+//    삭제
+    public void delete(File file){
+        entityManager.remove(file);
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

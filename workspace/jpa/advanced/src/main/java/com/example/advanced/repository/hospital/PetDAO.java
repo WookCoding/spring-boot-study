@@ -1,5 +1,6 @@
 package com.example.advanced.repository.hospital;
 
+import com.example.advanced.entity.hospital.Owner;
 import com.example.advanced.entity.hospital.Pet;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +20,7 @@ public class PetDAO {
         return pet;
     }
 
-//    조회
+//    엔티티 조회
     public Optional<Pet> findById(Long id){
 //        return Optional.ofNullable(entityManager.find(Pet.class, id));
         String query = "select p from Pet p join fetch p.owner where p.id = :id";
@@ -28,6 +29,11 @@ public class PetDAO {
                         .createQuery(query, Pet.class)
                         .setParameter("id", id)
                         .getSingleResult());
+    }
+
+//    참조 엔티티 조회
+    public Optional<Owner> findOwnerById(Long id){
+        return Optional.ofNullable(entityManager.find(Owner.class, id));
     }
 
 //    전체 조회

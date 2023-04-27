@@ -1,13 +1,13 @@
 package com.example.advanced.entity.member;
 
-import com.example.advanced.repository.member.MemberDAO;
+import com.example.advanced.repository.member.FileDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -15,42 +15,74 @@ import java.util.UUID;
 @Rollback(false)
 @Slf4j
 public class MemberTests {
-
     @Autowired
-    private MemberDAO memberDAO;
+    private FileDAO fileDAO;
 
-//    추가
     @Test
     public void saveTest(){
-        Member member=  new Member();
+        File file = new File();
+        Member member = new Member();
         MemberAddress memberAddress = new MemberAddress();
-        memberAddress.setMemberAddress("경기도 하남시");
-        memberAddress.setMemberAddressDetail("미사");
-        memberAddress.setMemberPostcode("1234");
 
-        member.setMemberAddress(memberAddress);
-        member.setMemberEmail("hds1234@naver.com");
-        member.setMemberPassword("1234");
+        memberAddress.setMemberAddress("경기도 남양주시 화도읍");
+        memberAddress.setMemberAddressDetail("104동 203호");
+        memberAddress.setMemberPostcode("12345");
+
         member.setMemberId("hds1234");
+        member.setMemberPassword("1234");
+        member.setMemberEmail("tedhan1204@gmail.com");
+        member.setMemberAddress(memberAddress);
 
-        for (int i = 0; i < 5; i++) {
-            File file = new File();
+        file.setFileName("땅문서.png");
+        file.setFilePath("2023/04/19");
+        file.setFileSize(1024L);
+        file.setFileUuid(UUID.randomUUID().toString());
+        file.setMember(member);
 
-            file.setFileUuid(UUID.randomUUID().toString());
-            file.setFileSize(1024L + Long.valueOf(i + 1));
-            file.setFilePath("/upload/" + i);
-            file.setFileName("이미지" + i + ".png");
-            file.setMember(member);
-            memberDAO.save(file);
-        }
+        fileDAO.save(file);
     }
 
     @Test
     public void findByIdTest(){
-        memberDAO.findById(1L).map(File::toString).ifPresent(log::info);
+        fileDAO.findById(21L).map(File::toString).ifPresent(log::info);
     }
 
     @Test
     public void findAllTest(){
+        fileDAO.findAll().stream().map(File::toString).forEach(log::info);
+    }
+
+    @Test
+    public void updateTest(){
+        fileDAO.findById(21L).ifPresent(file -> file.getMember().setMemberId("hgd8888"));
+    }
+
+    @Test
+    public void deleteTest(){
+        fileDAO.findById(21L).ifPresent(fileDAO::delete);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

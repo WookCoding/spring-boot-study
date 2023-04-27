@@ -1,4 +1,4 @@
-package com.example.expert.board;
+package com.example.expert.entity.board;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

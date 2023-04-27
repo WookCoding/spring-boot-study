@@ -1,20 +1,17 @@
-package com.example.expert.board;
+package com.example.expert.entity.board;
 
-import com.example.expert.audit.Period;
 import com.sun.istack.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @ToString
+@Getter @Setter @ToString(exclude = "likes")
 @Table(name = "TBL_BOARD")
-public class Board extends Period {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Board {
 //    id를 HashCode로 설정한다.
     @EqualsAndHashCode.Include
     @Id @GeneratedValue
@@ -25,9 +22,16 @@ public class Board extends Period {
     @OneToMany(
                 fetch = FetchType.LAZY,
                 mappedBy = "board",
-                cascade = {CascadeType.REMOVE, CascadeType.PERSIST}
+                cascade = {CascadeType.REMOVE, CascadeType.PERSIST},
+                orphanRemoval = true //컬렉션으로 삭제된 객체들까지 전부 감지하도록 설정
             )
     private List<Like> likes = new ArrayList<>();
+
+    @Builder
+    public Board(String boardTitle, String boardContent) {
+        this.boardTitle = boardTitle;
+        this.boardContent = boardContent;
+    }
 
     public void addLike(Like like){
         this.likes.add(like);

@@ -1,4 +1,4 @@
-package com.example.basic.domain.entity.type;
+package com.example.basic.type;
 
 public enum MemberType {
     MEMBER, ADMIN

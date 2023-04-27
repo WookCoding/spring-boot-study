@@ -30,21 +30,21 @@ public class SuperCarDAO {
         entityManager.remove(superCar);
     }
 
-    //    전체 조회
+//    전체 조회
     public List<SuperCar> findAll(){
         String query = "select s from SuperCar s";
         TypedQuery<SuperCar> result = entityManager.createQuery(query, SuperCar.class);
         return result.getResultList();
     }
 
-    //    전체 조회 페이징
+//    전체 조회 페이징
     public List<SuperCar> findAllWithPaging(int offset, int amount){
-        String query = "select s from SuperCar s";
-        TypedQuery<SuperCar> result = entityManager.createQuery(query, SuperCar.class);
-        result.setFirstResult(offset - 1);
-        result.setMaxResults(amount);
-        return result.getResultList();
-    }
+    String query = "select s from SuperCar s order by s.id desc";
+    TypedQuery<SuperCar> result = entityManager.createQuery(query, SuperCar.class);
+    result.setFirstResult(offset - 1);
+    result.setMaxResults(amount);
+    return result.getResultList();
+}
 
     //    특정 출시 날짜 조회
     public List<SuperCar> findAllByReleaseDate(String releaseDate){
@@ -54,7 +54,7 @@ public class SuperCarDAO {
         return result.getResultList();
     }
 
-    //    특정 출시 기간 조회
+//    특정 출시 기간 조회
     public List<SuperCar> findAllBetweenReleaseDate(LocalDateTime startDate, LocalDateTime endDate){
         String query = "select s from SuperCar s where s.releaseDate between :startDate and :endDate";
         TypedQuery<SuperCar> result = entityManager.createQuery(query, SuperCar.class);
@@ -63,8 +63,8 @@ public class SuperCarDAO {
         return result.getResultList();
     }
 
-    //    특정 이름 가격 조회
-    public List<SuperCar> findAllByNameAndPrice(String name, int price){
+//    특정 이름 가격 조회
+    public List<SuperCar> findAllByNameAndPrice(String name, double price){
         String query = "select s from SuperCar s where s.name = :name and s.price = :price";
         TypedQuery<SuperCar> result = entityManager.createQuery(query, SuperCar.class);
         result.setParameter("name", name);
@@ -73,20 +73,30 @@ public class SuperCarDAO {
     }
 
 //    4천만원이 넘는 가격대의 자동차 삭제
-    public void deleteByPriceGreaterThanEqual(int price) {
-        String query = "delete from SuperCar s where s.price >= :price";
-        entityManager.createQuery(query).setParameter("price",price).executeUpdate();
+    public void deleteByPriceGreaterThan(double price){
+        String query = "delete from SuperCar s where s.price > :price";
+        entityManager.createQuery(query).setParameter("price", price).executeUpdate();
     }
+
 //    특정 출시일의 자동차 가격을 10% 상승
-    public void updateByPriceLessThanEqual(String releaseDate) {
-        String query = "update SuperCar s set s.price = s.price*1.1 where function('to_char',s.releaseDate,'yyyymmdd')  = :releaseDate";
-        entityManager.createQuery(que.ry)
-                .setParameter("releaseDate",releaseDate)
+    public void updateByReleaseDate(String releaseDate, double rate) {
+//        JPQL SET절 또는 WHERE절에서는 좌항의 필드 자료형과 우항의 파라미터의 자료형이 동일한 지 검사한다.
+//        만약, 좌항의 필드가 long 타입이고, 우항의 파라미터가 double타입이라면, IllegalArgumentException이 발생한다.
+//        따라서 항상 좌항의 필드 타입과 우항의 파라미터 타입이 동일해야한다.
+//        ※ 우항에서 연산을 위해 ()괄호 연산자를 사용해야 한다면, JPQL에서 연산하지 말고 JAVA 코드에서 연산을 진행한다.
+        String query =
+                "update SuperCar s " +
+                "set s.price = s.price * :rate " +
+                "where function('to_char', s.releaseDate, 'yyyyMMdd') = :releaseDate";
+
+        entityManager.createQuery(query)
+                .setParameter("releaseDate", releaseDate)
+                .setParameter("rate", rate / 100.0 + 1)
                 .executeUpdate();
         entityManager.clear();
     }
-
 }
+
 
 
 
