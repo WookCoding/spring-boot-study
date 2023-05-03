@@ -1,10 +1,8 @@
 package com.example.expert.entity.registration;
 
 import com.example.expert.audit.Period;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 

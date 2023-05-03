@@ -1,18 +1,16 @@
 package com.example.expert.entity.registration;
 
 import com.sun.istack.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter @ToString
+@Getter @Setter @ToString(exclude = {"carRegistrations", "cars"})
 @Table(name = "TBL_CAR_OWNER")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CarOwner {
     @Id @GeneratedValue
     @EqualsAndHashCode.Include
@@ -33,6 +31,16 @@ public class CarOwner {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "carOwner", cascade = CascadeType.PERSIST)
     List<CarRegistration> carRegistrations = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carOwner")
+    List<Car> cars = new ArrayList<>();
+
+    @Builder
+    public CarOwner(String ownerName, Integer ownerAge, OwnerAddress ownerAddress, CarOwnerStatusType carOwnerStatus) {
+        this.ownerName = ownerName;
+        this.ownerAge = ownerAge;
+        this.ownerAddress = ownerAddress;
+        this.carOwnerStatus = carOwnerStatus;
+    }
 }
 
 
