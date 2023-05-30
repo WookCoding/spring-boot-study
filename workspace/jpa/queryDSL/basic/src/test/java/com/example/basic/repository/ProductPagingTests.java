@@ -8,12 +8,13 @@ import org.hibernate.criterion.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.QuerydslUtils;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import java.util.List;
 
 import static com.example.basic.entity.QProduct.product;
@@ -30,18 +31,17 @@ public class ProductPagingTests {
     private EntityManager entityManager;
 
     @Test
-    public void saveTest() {
+    public void saveTest(){
         Product product = null;
-        for (int i = 0; i < 100; i++) {
-            product = new Product("상품" + ( i + 1), 10000 + i, 10 + i);
+        for (int i=0; i<100; i++){
+            product = new Product("상품" + (i + 1), 10000 + i, 10 + i);
             productRepository.save(product);
         }
     }
 
     @Test
-    public void selectWithPagingTest() {
+    public void selectWithPagingTest(){
         JPAQueryFactory query = new JPAQueryFactory(entityManager);
-
         List<Product> foundProducts = query.select(product)
                 .from(product)
                 .orderBy(product.id.desc())
@@ -54,7 +54,6 @@ public class ProductPagingTests {
         Long count = query.select(product.count())
                 .from(product)
                 .fetchOne();
-
-        log.info(count  + "건 조회");
+        log.info(count + "건 조회");
     }
 }
